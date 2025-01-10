@@ -59,6 +59,15 @@ async function main() {
         })
     });
 
+    app.get("/services/add", async (req, res) => {
+        let [serviceType] = await connection.execute(`SELECT * FROM serviceType;`);
+        let [staff] = await connection.execute(`SELECT * FROM staff;`);
+        res.render("services/add", {
+            "serviceType":serviceType,
+            "staff":staff
+        })
+    });
+
     app.get("/items", async (req, res) => {
         let [items] = await connection.execute({
             sql: `SELECT * FROM item
