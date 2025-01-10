@@ -49,7 +49,9 @@ async function main() {
 
     app.get("/services", async (req, res) => {
         let [services] = await connection.execute({
-            sql: `SELECT * FROM service;`,
+            sql: `SELECT * FROM service
+                INNER JOIN serviceType ON serviceType.service_type_id = service.service_type_id_fk
+                INNER JOIN staff ON staff.staff_id = service.staff_id_fk;`,
             nestTables: true
         });
         res.render("services/index", {
