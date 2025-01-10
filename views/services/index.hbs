@@ -1,0 +1,16 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Services</h1>
+    {{#each services}}
+    <div class="card m-3" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{service.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{service.cost}}</h6>
+            <p class="card-text">Balala</p>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/block}}
+{{/extends}}
