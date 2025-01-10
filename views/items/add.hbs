@@ -1,0 +1,31 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Add New Items</h1>
+    <form>
+        <div class="mb-3">
+            <label for="itemNameInput" class="form-label">Item Name</label>
+            <input type="text" class="form-control" id="itemNameInput" aria-describedby="itemInfo" required>
+            <div id="itemInfo" class="form-text">Give name to your item.</div>
+        </div>
+        <div class="mb-3">
+            <label for="itemCostInput" class="form-label">Item Cost</label>
+            <input type="text" class="form-control" id="itemCostInput" aria-describedby="itemCostInfo" required>
+            <div id="itemCostInfo" class="form-text">Give cost in decimal places.</div>
+        </div>
+        <select class="form-select mb-3" aria-label="Select item type">
+            <option selected>Select item Type</option>
+            {{#each itemType}}
+            <option value={{item_type_id}}>{{name}}</option>
+            {{/each}}
+        </select>
+        <select class="form-select mb-3" aria-label="Select brand">
+            <option selected>Select Brand</option>
+            {{#each brand}}
+            <option value={{brand_id}}>{{name}}</option>
+            {{/each}}
+        </select>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {{/block}}
+    {{/extends}}

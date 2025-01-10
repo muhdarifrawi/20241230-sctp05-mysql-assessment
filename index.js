@@ -80,6 +80,15 @@ async function main() {
         })
     });
 
+    app.get("/items/add", async (req, res) => {
+        let [itemType] = await connection.execute(`SELECT * FROM itemType;`);
+        let [brand] = await connection.execute(`SELECT * FROM brand;`);
+        res.render("items/add", {
+            "itemType":itemType,
+            "brand":brand
+        })
+    });
+
     app.listen(3000, () => {
         console.log('Server is running')
     });
