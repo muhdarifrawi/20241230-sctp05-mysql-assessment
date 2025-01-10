@@ -2,15 +2,31 @@
 {{#block "content"}}
 <div class="container">
     <h1>Items</h1>
-    {{#each items}}
-    <div class="card m-3" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{item.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">{{item.cost}}</h6>
-            <p class="card-text">Balala</p>
-        </div>
-    </div>
-    {{/each}}
+    <table class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Type</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <td scope="row">{{item.name}}</td>
+                <td>{{itemType.name}}</td>
+                <td>{{brand.name}}</td>
+                <td>{{item.cost}}</td>
+                <td>
+                    <button role="button" class="btn btn-success">Edit</button>
+                    <button role="button" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </div>
 {{/block}}
 {{/extends}}

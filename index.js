@@ -61,7 +61,9 @@ async function main() {
 
     app.get("/items", async (req, res) => {
         let [items] = await connection.execute({
-            sql: `SELECT * FROM item;`,
+            sql: `SELECT * FROM item
+                INNER JOIN itemType ON itemType.item_type_id = item.item_type_id_fk
+                INNER JOIN brand ON brand.brand_id = item.brand_id_fk;`,
             nestTables: true
         });
         res.render("items/index", {
