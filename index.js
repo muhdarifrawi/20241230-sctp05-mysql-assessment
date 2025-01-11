@@ -43,7 +43,7 @@ async function main() {
             nestTables: true
         });
         res.render("products/index", {
-            "products":products
+            "products": products
         })
     });
 
@@ -55,7 +55,7 @@ async function main() {
             nestTables: true
         });
         res.render("services/index", {
-            "services":services
+            "services": services
         })
     });
 
@@ -63,28 +63,28 @@ async function main() {
         let [serviceType] = await connection.execute(`SELECT * FROM serviceType;`);
         let [staff] = await connection.execute(`SELECT * FROM staff;`);
         res.render("services/add", {
-            "serviceType":serviceType,
-            "staff":staff
+            "serviceType": serviceType,
+            "staff": staff
         })
     });
 
     app.post("/services/add", async (req, res) => {
         let {
-                serviceNameInput, 
-                serviceCostInput, 
-                serviceTypeId, 
-                staffId
-            } = req.body;   
+            serviceNameInput,
+            serviceCostInput,
+            serviceTypeId,
+            staffId
+        } = req.body;
 
         let query = `INSERT INTO service (
-        name, cost, service_type_id_fk, staff_id_fk)
-        VALUES (?,?,?,?);`;
+                    name, cost, service_type_id_fk, staff_id_fk)
+                    VALUES (?,?,?,?);`;
         let bindings = [
-                        serviceNameInput, 
-                        serviceCostInput,
-                        serviceTypeId,
-                        staffId
-                        ];
+            serviceNameInput,
+            serviceCostInput,
+            serviceTypeId,
+            staffId
+        ];
 
         await connection.execute(query, bindings);
         res.redirect("/services");
@@ -98,7 +98,7 @@ async function main() {
             nestTables: true
         });
         res.render("items/index", {
-            "items":items
+            "items": items
         })
     });
 
@@ -106,9 +106,32 @@ async function main() {
         let [itemType] = await connection.execute(`SELECT * FROM itemType;`);
         let [brand] = await connection.execute(`SELECT * FROM brand;`);
         res.render("items/add", {
-            "itemType":itemType,
-            "brand":brand
+            "itemType": itemType,
+            "brand": brand
         })
+    });
+
+    app.post("/items/add", async (req, res) => {
+        let {
+            itemNameInput,
+            itemCostInput,
+            itemTypeId,
+            brandId
+        } = req.body;
+
+        let query = `INSERT INTO item (
+                    name, cost, item_type_id_fk, brand_id_fk)
+                    VALUES (?,?,?,?);`;
+        let bindings = [
+            itemNameInput,
+            itemCostInput,
+            itemTypeId,
+            brandId
+        ];
+
+        await connection.execute(query, bindings);
+        res.redirect("/items");
+    
     });
 
     app.listen(3000, () => {
