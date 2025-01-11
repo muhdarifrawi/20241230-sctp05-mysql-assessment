@@ -2,29 +2,30 @@
 {{#block "content"}}
 <div class="container">
     <h1>Add New Services</h1>
-    <form>
+    <form method="POST">
         <div class="mb-3">
             <label for="serviceNameInput" class="form-label">Service Name</label>
-            <input type="text" class="form-control" id="serviceNameInput" aria-describedby="serviceInfo" required>
+            <input type="text" class="form-control" id="serviceNameInput" name="serviceNameInput" aria-describedby="serviceInfo" required>
             <div id="serviceInfo" class="form-text">Give name to your service.</div>
         </div>
         <div class="mb-3">
             <label for="serviceCostInput" class="form-label">Service Cost</label>
-            <input type="text" class="form-control" id="serviceCostInput" aria-describedby="serviceCostInfo" required>
+            <input type="text" class="form-control" id="serviceCostInput" name="serviceCostInput" aria-describedby="serviceCostInfo" required>
             <div id="serviceCostInfo" class="form-text">Give cost in decimal places.</div>
         </div>
-        <select class="form-select mb-3" aria-label="Select service type">
+        <select name="serviceTypeId" class="form-select mb-3" aria-label="Select service type">
             <option selected>Select Service Type</option>
             {{#each serviceType}}
             <option value={{service_type_id}}>{{name}}</option>
             {{/each}}
         </select>
-        <select class="form-select mb-3" aria-label="Select staff">
+        <select name="staffId" class="form-select mb-3" aria-label="Select staff">
             <option selected>Select Staff</option>
             {{#each staff}}
             <option value={{staff_id}}>{{name}}</option>
             {{/each}}
         </select>
+        <a class="btn btn-danger" role="button" href="/services">Cancel</a>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     {{/block}}

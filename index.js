@@ -68,6 +68,28 @@ async function main() {
         })
     });
 
+    app.post("/services/add", async (req, res) => {
+        let {
+                serviceNameInput, 
+                serviceCostInput, 
+                serviceTypeId, 
+                staffId
+            } = req.body;   
+
+        let query = `INSERT INTO service (
+        name, cost, service_type_id_fk, staff_id_fk)
+        VALUES (?,?,?,?);`;
+        let bindings = [
+                        serviceNameInput, 
+                        serviceCostInput,
+                        serviceTypeId,
+                        staffId
+                        ];
+
+        await connection.execute(query, bindings);
+        res.redirect("/services");
+
+    });
     app.get("/items", async (req, res) => {
         let [items] = await connection.execute({
             sql: `SELECT * FROM item
