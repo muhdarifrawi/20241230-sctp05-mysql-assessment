@@ -129,6 +129,25 @@ async function main() {
         res.redirect("/services");
     });
 
+    app.get("/services/delete/:id", async function(req,res){
+        let id = req.params.id
+        let[service] = await connection.execute(`SELECT * FROM service WHERE service_id = ?`, id)
+        service = service[0];
+        let [serviceType] = await connection.execute(`SELECT * FROM serviceType;`);
+        let [staff] = await connection.execute(`SELECT * FROM staff;`);
+        res.render("services/delete", {
+            "serviceType": serviceType,
+            "staff": staff,
+            "service":service
+        })
+    })
+
+    app.post("/services/delete/:id", async function(req, res){
+        let id = req.params.id;
+        await connection.execute(`DELETE FROM service WHERE service_id = ?`, id);
+        res.redirect('/services');
+    })
+
     app.get("/items", async (req, res) => {
         let [items] = await connection.execute({
             sql: `SELECT * FROM item

@@ -21,7 +21,7 @@
                 <td>{{service.cost}}</td>
                 <td>
                     <a role="button" class="btn btn-success" href="/services/edit/{{service.service_id}}">Edit</a>
-                    <button role="button" class="btn btn-danger">Delete</button>
+                    <a role="button" class="btn btn-danger" href="/services/delete/{{service.service_id}}">Delete</a>
                 </td>
             </tr>
             {{/each}}

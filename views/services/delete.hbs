@@ -1,0 +1,37 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Confirm Deletion of {{service.service_id}}</h1>
+
+    <form method="POST">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Are you sure you wish to delete the following item?</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Item No. {{item.item_id}}</h6>
+                <p class="card-text">
+                    <strong>Service Name: </strong>{{service.name}}
+                </p>
+                <p class="card-text">
+                    <strong>Service Cost: </strong>{{service.cost}}
+                </p>
+                <p class="card-text">
+                    <strong>Service Type: </strong>{{#each serviceType}}
+                {{#eq service_type_id ../service.service_type_id_fk}}
+                {{name}}
+                {{/eq}}
+                {{/each}}
+                </p>
+                <p class="card-text">
+                    <strong>Staff: </strong>{{#each staff}}
+                {{#eq staff_id ../service.staff_id_fk}}
+                {{name}}
+                {{/eq}}
+                {{/each}}
+                </p>
+                <a class="btn btn-secondary" role="button" href="/service">Cancel</a>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </form>
+    {{/block}}
+    {{/extends}}
