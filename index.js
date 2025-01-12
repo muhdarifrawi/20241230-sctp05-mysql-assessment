@@ -211,6 +211,26 @@ async function main() {
         res.redirect("/items");
     });
 
+    app.get("/items/delete/:id", async function(req,res){
+        let id = req.params.id;
+        let [item] = await connection.execute('SELECT * from item WHERE item_id = ?', id);
+        item = item[0];
+        let [itemType] = await connection.execute(`SELECT * FROM itemType;`);
+        let [brand] = await connection.execute(`SELECT * FROM brand;`);
+        res.render('items/delete', {
+            "itemType": itemType,
+            "brand": brand,
+            "item":item
+        })
+
+    })
+
+    app.post("/items/delete/:id", async function(req, res){
+        let id = req.params.id;
+        await connection.execute(`DELETE FROM item WHERE item_id = ?`, id);
+        res.redirect('/items');
+    })
+
     app.listen(3000, () => {
         console.log('Server is running')
     });
