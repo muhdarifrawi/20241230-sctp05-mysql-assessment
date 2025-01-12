@@ -6,12 +6,12 @@
     <form method="POST">
         <div class="mb-3">
             <label for="itemNameInput" class="form-label">Item Name</label>
-            <input value={{item.name}} type="text" class="form-control" name="itemNameInput" id="itemNameInput" aria-describedby="itemInfo" required>
+            <input value="{{item.name}}" type="text" class="form-control" name="itemNameInput" id="itemNameInput" aria-describedby="itemInfo" required>
             <div id="itemInfo" class="form-text">Give name to your item.</div>
         </div>
         <div class="mb-3">
             <label for="itemCostInput" class="form-label">Item Cost</label>
-            <input value={{item.cost}} type="text" class="form-control" name="itemCostInput" id="itemCostInput" aria-describedby="itemCostInfo" required>
+            <input value="{{item.cost}}" type="text" class="form-control" name="itemCostInput" id="itemCostInput" aria-describedby="itemCostInfo" required>
             <div id="itemCostInfo" class="form-text">Give cost in decimal places.</div>
         </div>
         <select name="itemTypeId" class="form-select mb-3" aria-label="Select item type">

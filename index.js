@@ -149,6 +149,30 @@ async function main() {
         })
     });
 
+    app.post("/items/edit/:id", async (req, res) => {
+        let id = req.params.id;
+        let {
+            itemNameInput,
+            itemCostInput,
+            itemTypeId,
+            brandId
+        } = req.body;
+
+        let query = `UPDATE item SET 
+                    name=?, cost=?, item_type_id_fk=?, brand_id_fk=?
+                    WHERE item_id= ?;`;
+        let bindings = [
+            itemNameInput,
+            itemCostInput,
+            itemTypeId,
+            brandId,
+            id
+        ];
+
+        await connection.execute(query, bindings);
+        res.redirect("/items");
+    });
+
     app.listen(3000, () => {
         console.log('Server is running')
     });
