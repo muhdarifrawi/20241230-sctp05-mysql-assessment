@@ -1,0 +1,23 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Products</h1>
+    {{#each cart}}
+    <div class="card m-3" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Item No. {{cartItems.cart_id}}</h5>
+            <p class="card-text">
+                <strong>Product Name: </strong>{{cartItems.name}}
+            </p>
+            <p class="card-text">
+                <strong>Quantity: </strong>{{cartItems.quantity}}
+            </p>
+            <p class="card-text">
+                <strong>Client: </strong>{{user.name}}
+            </p>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/block}}
+{{/extends}}

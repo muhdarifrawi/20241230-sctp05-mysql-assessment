@@ -29,7 +29,10 @@ async function main() {
         "user": process.env.DB_USER,
         "database": process.env.DB_NAME,
         "password": process.env.DB_PASSWORD,
-        "namedPlaceholders": true
+        "namedPlaceholders": true,
+        waitForConnections: true,
+        connectionLimit: 10000,
+        queueLimit: 0,
     })
 
     app.get("/", (req, res) => {
@@ -248,6 +251,68 @@ async function main() {
         let id = req.params.id;
         await connection.execute(`DELETE FROM item WHERE item_id = ?`, id);
         res.redirect('/items');
+    })
+
+    app.get("/cart", async function(req, res){
+        let[cart] = await connection.execute({
+            sql:`SELECT * FROM cartItems
+                INNER JOIN product ON product.product_id = cartItems.product_id_fk
+                INNER JOIN user ON user.user_id = cartItems.user_id_fk;`,
+            nestTables: true    
+        });
+        // cart = cart[0];
+        // let [user] = await connection.execute(`SELECT * FROM user;`);
+        console.log(cart);
+        res.render("cart", {
+            "cart":cart,
+            // "user":user
+        })
+    })
+
+    app.get("/cart/add/:id", async function(req, res){
+        let id = req.params.id
+        let[product] = await connection.execute(`SELECT * FROM product WHERE product_id = ?`, id);
+        product = product[0];
+        let [user] = await connection.execute(`SELECT * FROM user;`);
+        // console.log("PRODUCTS", product);
+        res.render("cart/add", {
+            "product":product,
+            "user":user
+        })
+    })
+
+    app.post("/cart/add/:id", async function(req, res){
+        let { 
+            name,
+            quantity,
+            productId,
+            userId
+        } = req.body;
+
+        if(productId == "" || !productId){
+            productId = null;
+        }
+
+        if(userId == "" || !userId){
+            userId = null;
+        }
+
+        console.log(name,
+            quantity,
+            productId,
+            userId);
+        let query = `INSERT INTO cartItems (
+                    name, quantity, product_id_fk, user_id_fk)
+                    VALUES (?,?,?,?);`;
+        let bindings = [
+            name,
+            quantity,
+            productId,
+            userId
+        ];
+
+        await connection.execute(query, bindings);
+        res.redirect('/products');
     })
 
     app.listen(3000, () => {

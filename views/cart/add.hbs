@@ -1,0 +1,43 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Add Product To Cart</h1>
+
+    <form method="POST">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Item No. {{product.product_id}}</h5>
+                <p class="card-text">
+                    <strong>Product Name: </strong>{{product.name}}
+                </p>
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-auto">
+                        <label for="quantity" class="col-form-label">Quantity</label>
+                    </div>
+                    <div class="col-1">
+                        <input type="text" id="quantity" class="form-control" name="quantity"
+                            aria-describedby="quantityHelp" value="1" required>
+                    </div>
+                    <div class="col-auto">
+                        <span id="quantityHelp" class="form-text">
+                            Please enter a whole number.
+                        </span>
+                    </div>
+                    <select name="userId" class="form-select mb-3" aria-label="Select item type">
+                        <option selected>Select Client</option>
+                        {{#each user}}
+                        <option value={{user_id}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <input type="text" readonly class="visually-hidden" id="name" name="name" value="{{product.name}}">
+                <input type="text" readonly class="visually-hidden" id="productId" name="productId"
+                    value="{{product.product_id}}">
+
+                <a class="btn btn-secondary" role="button" href="/products">Cancel</a>
+                <button type="submit" class="btn btn-warning">Add To Cart</button>
+            </div>
+        </div>
+    </form>
+    {{/block}}
+    {{/extends}}

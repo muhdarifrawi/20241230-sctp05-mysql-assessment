@@ -54,15 +54,16 @@ CREATE TABLE product (
 	name varchar(45),
 	item_id_fk INT,
 	service_id_fk INT,
-	FOREIGN KEY (item_id_fk) REFERENCES item(item_id) ON DELETE SET NULL,
-	FOREIGN KEY (service_id_fk) REFERENCES service(service_id) ON DELETE SET NULL
+	FOREIGN KEY (item_id_fk) REFERENCES item(item_id) ON DELETE CASCADE,
+	FOREIGN KEY (service_id_fk) REFERENCES service(service_id) ON DELETE CASCADE
 );
 
-CREATE TABLE cart_items (
+CREATE TABLE cartItems (
 	cart_id INT AUTO_INCREMENT PRIMARY KEY,
+	name varchar(45),
 	product_id_fk INT,
 	user_id_fk INT,
-	FOREIGN KEY (product_id_fk) REFERENCES product(product_id) ON DELETE SET NULL,
-	FOREIGN KEY (user_id_fk) REFERENCES user(user_id) ON DELETE SET NULL,
+	FOREIGN KEY (product_id_fk) REFERENCES product(product_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id_fk) REFERENCES user(user_id) ON DELETE CASCADE,
 	quantity INT
 );
