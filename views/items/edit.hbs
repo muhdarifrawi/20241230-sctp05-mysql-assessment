@@ -1,0 +1,39 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Edit {{item.item_id}}</h1>
+    
+    <form method="POST">
+        <div class="mb-3">
+            <label for="itemNameInput" class="form-label">Item Name</label>
+            <input value={{item.name}} type="text" class="form-control" name="itemNameInput" id="itemNameInput" aria-describedby="itemInfo" required>
+            <div id="itemInfo" class="form-text">Give name to your item.</div>
+        </div>
+        <div class="mb-3">
+            <label for="itemCostInput" class="form-label">Item Cost</label>
+            <input value={{item.cost}} type="text" class="form-control" name="itemCostInput" id="itemCostInput" aria-describedby="itemCostInfo" required>
+            <div id="itemCostInfo" class="form-text">Give cost in decimal places.</div>
+        </div>
+        <select name="itemTypeId" class="form-select mb-3" aria-label="Select item type">
+            <option selected>Select item Type</option>
+            {{#each itemType}}
+                <option value={{item_type_id}} 
+                {{#eq item_type_id ../item.item_type_id_fk}}selected{{/eq}}>
+                        {{name}}
+                </option>
+            {{/each}}
+        </select>
+        <select name="brandId" class="form-select mb-3" aria-label="Select brand">
+            <option selected>Select Brand</option>
+            {{#each brand}}
+                <option value={{brand_id}}
+                {{#eq brand_id ../item.brand_id_fk}}selected{{/eq}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+        <a class="btn btn-danger" role="button" href="/items">Cancel</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {{/block}}
+    {{/extends}}

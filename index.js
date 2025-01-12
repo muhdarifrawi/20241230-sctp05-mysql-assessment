@@ -25,10 +25,11 @@ let connection;
 
 async function main() {
     connection = await createConnection({
-        'host': process.env.DB_HOST,
-        'user': process.env.DB_USER,
-        'database': process.env.DB_NAME,
-        'password': process.env.DB_PASSWORD
+        "host": process.env.DB_HOST,
+        "user": process.env.DB_USER,
+        "database": process.env.DB_NAME,
+        "password": process.env.DB_PASSWORD,
+        "namedPlaceholders": true
     })
 
     app.get("/", (req, res) => {
@@ -132,6 +133,20 @@ async function main() {
         await connection.execute(query, bindings);
         res.redirect("/items");
     
+    });
+
+    app.get("/items/edit/:id", async (req, res) => {
+        let id = req.params.id;
+        let [item] = await connection.execute('SELECT * from item WHERE item_id = ?', id);
+        item = item[0];
+        let [itemType] = await connection.execute(`SELECT * FROM itemType;`);
+        let [brand] = await connection.execute(`SELECT * FROM brand;`);
+        console.log(item);
+        res.render("items/edit", {
+            "itemType": itemType,
+            "brand": brand,
+            "item":item
+        })
     });
 
     app.listen(3000, () => {
