@@ -1,7 +1,27 @@
 {{#extends "base"}}
 {{#block "content"}}
-<div class="container">
-    <h1>Homepage</h1>
+<div class="container d-flex justify-content-around">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Buy Products</h5>
+            <p class="card-text">Buy products from Bicycle Shop</p>
+            <a href="/products" class="btn btn-primary">Buy Products</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Add Service</h5>
+            <p class="card-text">Add new service into Bicycle Shop</p>
+            <a href="/services" class="btn btn-primary">Add Service</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Add Item</h5>
+            <p class="card-text">Add new item into Bicycle Shop</p>
+            <a href="/items" class="btn btn-primary">Add Item</a>
+        </div>
+    </div>
 </div>
 
 {{/block}}
