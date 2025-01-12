@@ -1,0 +1,38 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+    <h1>Add New Services</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="serviceNameInput" class="form-label">Service Name</label>
+            <input value="{{service.name}}" type="text" class="form-control" id="serviceNameInput" name="serviceNameInput" aria-describedby="serviceInfo" required>
+            <div id="serviceInfo" class="form-text">Give name to your service.</div>
+        </div>
+        <div class="mb-3">
+            <label for="serviceCostInput" class="form-label">Service Cost</label>
+            <input value="{{service.cost}}" type="text" class="form-control" id="serviceCostInput" name="serviceCostInput" aria-describedby="serviceCostInfo" required>
+            <div id="serviceCostInfo" class="form-text">Give cost in decimal places.</div>
+        </div>
+        <select name="serviceTypeId" class="form-select mb-3" aria-label="Select service type">
+            <option selected>Select Service Type</option>
+            {{#each serviceType}}
+                <option value={{service_type_id}}
+                {{#eq service_type_id ../service.service_type_id_fk}}selected{{/eq}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+        <select name="staffId" class="form-select mb-3" aria-label="Select staff">
+            <option selected>Select Staff</option>
+            {{#each staff}}
+                <option value={{staff_id}}
+                {{#eq staff_id ../service.staff_id_fk}}selected{{/eq}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+        <a class="btn btn-danger" role="button" href="/services">Cancel</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {{/block}}
+    {{/extends}}

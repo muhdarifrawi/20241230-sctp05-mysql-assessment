@@ -91,6 +91,44 @@ async function main() {
         res.redirect("/services");
 
     });
+
+    app.get("/services/edit/:id", async (req, res) => {
+        let id = req.params.id
+        let[service] = await connection.execute(`SELECT * FROM service WHERE service_id = ?`, id)
+        service = service[0];
+        let [serviceType] = await connection.execute(`SELECT * FROM serviceType;`);
+        let [staff] = await connection.execute(`SELECT * FROM staff;`);
+        res.render("services/edit", {
+            "serviceType": serviceType,
+            "staff": staff,
+            "service":service
+        })
+    });
+
+    app.post("/services/edit/:id", async (req, res) => {
+        let id = req.params.id;
+        let {
+            serviceNameInput,
+            serviceCostInput,
+            serviceTypeId,
+            staffId
+        } = req.body;
+
+        let query = `UPDATE service SET 
+                    name=?, cost=?, service_type_id_fk=?, staff_id_fk=?
+                    WHERE service_id= ?;`;
+        let bindings = [
+            serviceNameInput,
+            serviceCostInput,
+            serviceTypeId,
+            staffId,
+            id
+        ];
+
+        await connection.execute(query, bindings);
+        res.redirect("/services");
+    });
+
     app.get("/items", async (req, res) => {
         let [items] = await connection.execute({
             sql: `SELECT * FROM item
