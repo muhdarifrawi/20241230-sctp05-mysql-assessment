@@ -151,6 +151,35 @@ async function main() {
         res.redirect('/services');
     })
 
+    app.post("/services", async function(req,res) {
+        let searchInput = [req.body.searchInput];
+        console.log(searchInput);
+        let serviceTypeId = searchInput[0];
+        console.log("SERVICE TYPE ID >>>", serviceTypeId);
+        let [services] = [];
+        if (searchInput[0] == 0){
+            [services] = await connection.execute({
+                sql: `SELECT * FROM service
+                    INNER JOIN serviceType ON serviceType.service_type_id = service.service_type_id_fk
+                    INNER JOIN staff ON staff.staff_id = service.staff_id_fk;`,
+                nestTables: true
+            });
+        }
+        else {
+            [services] = await connection.execute({
+                sql: `SELECT * FROM service
+                    INNER JOIN serviceType ON serviceType.service_type_id = service.service_type_id_fk
+                    INNER JOIN staff ON staff.staff_id = service.staff_id_fk
+                    WHERE service_type_id_fk = ?;`, 
+                nestTables: true
+            }, [serviceTypeId]);
+        }
+        console.log(services)
+        res.render("services/index", {
+            "services": services
+        })
+    })
+
     app.get("/items", async (req, res) => {
         let [items] = await connection.execute({
             sql: `SELECT * FROM item

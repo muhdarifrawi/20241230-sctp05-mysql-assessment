@@ -2,6 +2,20 @@
 {{#block "content"}}
 <div class="container">
     <h1>Services <a href="/services/add" class="btn btn-primary" role="button">Add Service</a></h1>
+    <form method="POST" class="row g-3">
+        <div class="col-auto">
+            <select class="form-select" aria-label="Select service type" name="searchInput">
+                <option selected>Select Service Type</option>
+                <option value="0">All</option>
+                <option value="1">Repairs</option>
+                <option value="2">Maintenance</option>
+                <option value="3">Cleaning</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Search</button>
+        </div>
+    </form>
     <table class="table table-success table-striped">
         <thead>
             <tr>
